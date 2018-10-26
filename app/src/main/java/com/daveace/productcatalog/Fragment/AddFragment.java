@@ -33,7 +33,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
 
 import static android.app.Activity.RESULT_CANCELED;
 
@@ -64,8 +63,6 @@ public class AddFragment extends Fragment {
 
     private String codeImagePath;
 
-    private Realm realm;
-
     private RealmDatabaseHelper realmDatabaseHelper;
 
     @Nullable
@@ -73,8 +70,7 @@ public class AddFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
         ButterKnife.bind(this, view);
-        realm = Realm.getDefaultInstance();
-        realmDatabaseHelper = new RealmDatabaseHelper(realm);
+        realmDatabaseHelper = RealmDatabaseHelper.getInstance();
         setHasOptionsMenu(true);
         return view;
     }
@@ -106,25 +102,25 @@ public class AddFragment extends Fragment {
     public void onBindCodeClick() {
         Bitmap bitmap;
         String selectedItem = codeSpinner.getSelectedItem().toString();
-        if (selectedItem.equals(Constant.BARCODE)){
+        if (selectedItem.equals(Constant.BARCODE)) {
             bitmap = ScanCodeUtil.bindCode(codeImageView.getHeight(), codeImageView.getWidth(),
                     BarcodeFormat.UPC_E, codeImageView, getActivity());
-        }else {
+        } else {
             bitmap = ScanCodeUtil.bindCode(codeImageView.getHeight(), codeImageView.getWidth(),
-                    BarcodeFormat.QR_CODE, codeImageView,  getActivity());
+                    BarcodeFormat.QR_CODE, codeImageView, getActivity());
         }
-        codeImagePath = MediaUtil.saveImage(bitmap,getActivity());
+        codeImagePath = MediaUtil.saveImage(bitmap, getActivity());
     }
 
     @OnClick(R.id.add)
-    public void onAddClick(){
+    public void onAddClick() {
         Product product;
-        if ((productEditText.getText()!= null) && (capturedImagePath != null)){
+        if ((productEditText.getText() != null) && (capturedImagePath != null)) {
             product = new Product();
             product.setName(productEditText.getText().toString().trim());
             product.setImageUrl(capturedImagePath);
             product.setCodeUrl(codeImagePath);
-            realmDatabaseHelper.addProduct(product,getActivity());
+            realmDatabaseHelper.addProduct(product, getActivity());
         }
 
     }
@@ -146,8 +142,6 @@ public class AddFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (realm!=null){
-            realm.close();
-        }
+        realmDatabaseHelper.close();
     }
 }
