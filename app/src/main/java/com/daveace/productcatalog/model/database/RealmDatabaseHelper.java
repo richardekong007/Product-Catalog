@@ -15,14 +15,29 @@ import io.realm.RealmResults;
 
 public class RealmDatabaseHelper {
 
+    private static RealmDatabaseHelper realmDatabaseHelper = null;
+
     private Realm realmInstance;
 
+    private RealmDatabaseHelper() {
+        realmInstance = Realm.getDefaultInstance();
+    }
 
-    public RealmDatabaseHelper(Realm realmInstance) {
-        this.realmInstance = realmInstance;
+    private void openRealmInstance(){
+        //prevent exception due to closed instance
+        if (realmInstance.isClosed())
+            realmInstance = Realm.getDefaultInstance();
+    }
+
+    public static RealmDatabaseHelper getInstance() {
+        if (realmDatabaseHelper == null) {
+            realmDatabaseHelper = new RealmDatabaseHelper();
+        }
+        return realmDatabaseHelper;
     }
 
     public void addProduct(Product product, Context ctx) {
+        openRealmInstance();
         if (product != null) {
             realmInstance.executeTransactionAsync(realm -> {
                         Number index = realm.where(Product.class).max("id");
@@ -35,12 +50,13 @@ public class RealmDatabaseHelper {
     }
 
     public List<Product> getProducts() {
-
+        openRealmInstance();
         RealmResults<Product> productRealmResults = realmInstance.where(Product.class).findAllAsync();
         return new ArrayList<>(productRealmResults);
     }
 
     public void updateProduct(Product product, Context ctx) {
+        openRealmInstance();
         realmInstance.executeTransactionAsync(realm -> {
                     if (product != null) {
                         realm.insertOrUpdate(product);
@@ -51,6 +67,7 @@ public class RealmDatabaseHelper {
 
 
     public void deleteProduct(int id, Context ctx) {
+        openRealmInstance();
         final RealmResults<Product> products = realmInstance
                 .where(Product.class)
                 .findAll();
@@ -62,7 +79,7 @@ public class RealmDatabaseHelper {
     }
 
     public void close() {
-        if (realmInstance != null) {
+        if (!realmInstance.isClosed()) {
             realmInstance.close();
         }
     }
