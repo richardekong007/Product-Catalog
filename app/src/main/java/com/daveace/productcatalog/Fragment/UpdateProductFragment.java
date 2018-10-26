@@ -28,7 +28,6 @@ import com.google.zxing.BarcodeFormat;
 import java.util.Objects;
 
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static com.daveace.productcatalog.interfaces.Constant.QRCODE;
@@ -57,7 +56,7 @@ public class UpdateProductFragment extends Fragment {
 
     private int productId;
 
-    private Realm realm;
+    private RealmDatabaseHelper realmDatabaseHelper;
 
 
     @Nullable
@@ -67,16 +66,14 @@ public class UpdateProductFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_update_product, container, false);
         ButterKnife.bind(view, Objects.requireNonNull(getActivity()));
         initView(view);
-        realm = Realm.getDefaultInstance();
+        realmDatabaseHelper = RealmDatabaseHelper.getInstance();
         return view;
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        if (realm != null) {
-            realm.close();
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        realmDatabaseHelper.close();
     }
 
     @Override
@@ -131,12 +128,11 @@ public class UpdateProductFragment extends Fragment {
     }
 
     public void update() {
-        RealmDatabaseHelper realmDatabaseHelper = new RealmDatabaseHelper(realm);
         Product product = new Product();
         productName = productNameEditText.getText().toString();
         product.setId(productId);
         product.setName(productName);
-        product.setImageUrl(captureImagePath!=null? captureImagePath : productImagePath);
+        product.setImageUrl(captureImagePath != null ? captureImagePath : productImagePath);
         product.setCodeUrl(codeImagePath);
         realmDatabaseHelper.updateProduct(product, getActivity());
         FragmentUtil.replaceFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
