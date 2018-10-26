@@ -1,4 +1,4 @@
-package com.daveace.productcatalog.Fragment;
+package com.daveace.productcatalog.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.daveace.productcatalog.Adapter.CatalogAdapter;
+import com.daveace.productcatalog.adapter.CatalogAdapter;
 import com.daveace.productcatalog.R;
 import com.daveace.productcatalog.interfaces.CatalogItemLongClickListener;
 import com.daveace.productcatalog.interfaces.ScanListener;

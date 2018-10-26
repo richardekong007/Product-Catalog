@@ -1,4 +1,4 @@
-package com.daveace.productcatalog.Fragment;
+package com.daveace.productcatalog.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

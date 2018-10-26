@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.daveace.productcatalog.Fragment.AddFragment;
-import com.daveace.productcatalog.Fragment.CatalogFragment;
+import com.daveace.productcatalog.fragment.AddFragment;
+import com.daveace.productcatalog.fragment.CatalogFragment;
 import com.daveace.productcatalog.R;
 import com.daveace.productcatalog.model.database.RealmDatabaseHelper;
 import com.daveace.productcatalog.util.FragmentUtil;
