@@ -32,7 +32,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
 import static com.daveace.productcatalog.interfaces.Constant.UPDATE_PRODUCT_CODE_PATH;
 import static com.daveace.productcatalog.interfaces.Constant.UPDATE_PRODUCT_ID;
@@ -51,19 +50,22 @@ public class CatalogFragment extends Fragment implements CatalogItemLongClickLis
 
     private BarcodeDetector barcodeDetector;
 
+    private RealmDatabaseHelper realmDatabaseHelper;
+
+    private CatalogAdapter catalogAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View catalogView = inflater.inflate(R.layout.fragment_catalog, container, false);
         ButterKnife.bind(this, catalogView);
         setHasOptionsMenu(true);
-        Realm realm = Realm.getDefaultInstance();
-        RealmDatabaseHelper realmDatabaseHelper = new RealmDatabaseHelper(realm);
+        realmDatabaseHelper = RealmDatabaseHelper.getInstance();
         barcodeDetector = new BarcodeDetector.Builder(getActivity())
                 .setBarcodeFormats(Barcode.QR_CODE | Barcode.UPC_E)
                 .build();
         products = realmDatabaseHelper.getProducts();
-        setupAdaptor();
+        setupCatalogProductAdaptor();
         return catalogView;
     }
 
@@ -94,9 +96,15 @@ public class CatalogFragment extends Fragment implements CatalogItemLongClickLis
         textView.setText(scanedValue);
     }
 
-    private void setupAdaptor() {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realmDatabaseHelper.close();
+    }
 
-        CatalogAdapter catalogAdapter = new CatalogAdapter(products);
+    private void setupCatalogProductAdaptor() {
+
+        catalogAdapter = new CatalogAdapter(products);
         catalogAdapter.setScanListener(this);
         catalogAdapter.setLongClickListener(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
@@ -124,6 +132,8 @@ public class CatalogFragment extends Fragment implements CatalogItemLongClickLis
                     break;
                 case R.id.delete_item:
                     //delete product with productId
+                    realmDatabaseHelper.deleteProduct(product.getId(), getActivity());
+                    catalogAdapter.notifyDataSetChanged();
                     break;
             }
             return false;
