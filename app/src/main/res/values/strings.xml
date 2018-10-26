@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Product Catalog</string>
+    <string name="bind_code">Bind Code</string>
+    <string name="product_name">Product Name</string>
+    <string name="scan_text">Scan</string>
+    <string name="add_text">Add</string>
+    <string name="update_text">Update</string>
+    <string name="edit_item">Edit</string>
+    <string name="delete_item">Delete</string>
+    <string name="update_dialog_fragment_title">Update Product Record</string>
+    <string name="insert_failure_message">Failed to Add product</string>
+    <string name="update_success_message">Update succesfull!</string>
+    <string name="product_deletion_message">Product Deleted!</string>
+    <string name="authority">com.daveace.productcatalog.fileprovider</string>
+    <string name="camera_cancel">Do you wish to cancel image capture process?</string>
+
+
+    <string-array name="code_types">
+        <item>QR-Code</item>
+        <item>Barcode</item>
+    </string-array>
+</resources>

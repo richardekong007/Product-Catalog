@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/text_small"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_medium">
+
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="@dimen/image_dimens"
+                android:layout_height="@dimen/image_dimens" />
+
+            <ImageView
+                android:id="@+id/code_image"
+                android:layout_width="@dimen/image_dimens"
+                android:layout_height="@dimen/image_dimens" />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/text_small">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/capture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/margin_giant"
+                android:elevation="@dimen/elevation"
+                app:backgroundTint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_camera" />
+
+            <EditText
+                android:id="@+id/product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_giant"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:background="@color/transparent"
+                android:elevation="@dimen/elevation"
+                android:hint="@string/product_name" />
+
+            <Spinner
+                android:id="@+id/code_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_extra_large"
+                android:layout_marginEnd="@dimen/margin_giant"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:elevation="@dimen/elevation"
+                android:entries="@array/code_types" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bind_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:backgroundTint="@color/colorPrimary"
+                android:elevation="@dimen/elevation"
+                android:text="@string/bind_code"
+                android:textColor="@android:color/white" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/margin_giant"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:elevation="@dimen/elevation"
+                app:backgroundTint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_add" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>
