@@ -10,27 +10,23 @@ import com.daveace.productcatalog.R;
 import com.daveace.productcatalog.model.database.RealmDatabaseHelper;
 import com.daveace.productcatalog.util.FragmentUtil;
 
-import io.realm.Realm;
-
 
 public class MainActivity extends AppCompatActivity {
 
-    private Realm realmDb;
+    RealmDatabaseHelper realmDatabaseHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        realmDb = Realm.getDefaultInstance();
+        realmDatabaseHelper = RealmDatabaseHelper.getInstance();
         loadFragment();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (realmDb != null) {
-            realmDb.close();
-        }
+        realmDatabaseHelper.close();
     }
 
     private void loadFragment() {
@@ -44,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean noProductFound() {
-        RealmDatabaseHelper helper = new RealmDatabaseHelper(realmDb);
-        return helper.getProducts().isEmpty();
+        return realmDatabaseHelper.getProducts().isEmpty();
     }
 }
