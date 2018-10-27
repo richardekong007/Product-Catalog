@@ -21,7 +21,6 @@ public interface Constant {
 
     int MAX = 99999999;
 
-
     String IMAGE_FILE_TYPE = ".jpg";
 
     String FILE_NAME_FORMAT = "yyyyMMdd_HHmmss";
